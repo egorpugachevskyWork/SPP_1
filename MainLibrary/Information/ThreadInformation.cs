@@ -19,5 +19,13 @@ namespace MainLibrary.Information
         {
             Id = id;
         }
+
+        public void EstimateElapsedTime()
+        {
+            foreach (var method in Methods)
+            {
+                ElapsedTime += method.ElapsedTime;
+            }
+        }
     }
 }
