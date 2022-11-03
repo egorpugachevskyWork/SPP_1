@@ -29,7 +29,7 @@ namespace WorkingExample
         {
             _tracer.StartTrace();
 
-            Thread.Sleep(600);
+            Thread.Sleep(400);
 
             _tracer.StopTrace();
         }

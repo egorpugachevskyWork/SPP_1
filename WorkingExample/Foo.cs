@@ -23,6 +23,7 @@ namespace WorkingExample
             _tracer.StartTrace();
 
             _boo.InnerMethod();
+            Thread.Sleep(200);
 
             _tracer.StopTrace();
         }
