@@ -10,9 +10,6 @@ namespace WorkingExample
             ITracer tracer = new Tracer();
             var foo = new Foo(tracer);
 
-            
-         //   foo.MyMethod();//one method works perfectly
-         //   foo.MyMethod();//multiple methods work perfectly too
             var t1 = new Task(() => foo.MyMethod());
             var t2  = new Task(() => {
                 foo.MyMethod();
@@ -25,10 +22,15 @@ namespace WorkingExample
             t1.Wait();
             t2.Wait();
 
-            //Thread broke everthing
             var result = tracer.GetTraceResult();
             ITraceSerializer jsonSerializaer = new JsonTraceSerializer();
-            Console.WriteLine(jsonSerializaer.Serialize(result));
+            var jsonString = jsonSerializaer.Serialize(result); 
+
+            ITraceWriter consoleWriter = new ConsoleTraceWriter();
+            ITraceWriter fileWriter = new FileTraceWriter("D:\\forlab1.txt");
+
+            consoleWriter.Write(jsonString);
+            fileWriter.Write(jsonString);
         }
     }
 }
