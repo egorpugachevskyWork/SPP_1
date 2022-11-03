@@ -1,4 +1,5 @@
-﻿using MainLibrary.Tracer;
+﻿using MainLibrary.Serialization;
+using MainLibrary.Tracer;
 
 namespace WorkingExample
 {
@@ -26,7 +27,8 @@ namespace WorkingExample
 
             //Thread broke everthing
             var result = tracer.GetTraceResult();
-            Console.WriteLine();
+            ITraceSerializer jsonSerializaer = new JsonTraceSerializer();
+            Console.WriteLine(jsonSerializaer.Serialize(result));
         }
     }
 }
