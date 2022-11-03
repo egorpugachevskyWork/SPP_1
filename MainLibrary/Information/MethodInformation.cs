@@ -27,5 +27,18 @@ namespace MainLibrary.Information
             MethodName = methodName;
             ClassName = className;
         }
+
+        public void StartTracing()
+        {
+            Clock.Reset();
+            Clock.Start();
+        }
+
+        public void StopTracing()
+        {
+            Clock.Stop();
+            IsHandled = true;
+            ElapsedTime += Clock.ElapsedMilliseconds;
+        }
     }
 }
