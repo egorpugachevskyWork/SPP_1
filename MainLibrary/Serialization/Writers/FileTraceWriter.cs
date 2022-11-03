@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainLibrary.Serialization
+namespace MainLibrary.Serialization.Writers
 {
     public class FileTraceWriter : ITraceWriter
     {

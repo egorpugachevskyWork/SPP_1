@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainLibrary.Information
+namespace MainLibrary.Serialization.XML
 {
     public class MethodInformation
     {

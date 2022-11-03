@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainLibrary.Tracer
+namespace MainLibrary.Serialization.XML
 {
     public class TraceResult
     {

@@ -1,17 +1,12 @@
-﻿using MainLibrary.Tracer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace MainLibrary.Serialization
+namespace MainLibrary.Serialization.XML
 {
     public class XMLSerializer : ITraceSerializer
     {
-        string ITraceSerializer.Serialize(TraceResult traceResult)
+        string ITraceSerializer.Serialize(MainLibrary.Tracer.TraceResult traceResult)
         {
             using (var memStream = new MemoryStream())
             {

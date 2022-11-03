@@ -9,7 +9,7 @@ namespace MainLibrary.Tracer
 {
     public class TraceResult
     {
-        public List<ThreadInformation> Threads { get; } = new List<ThreadInformation>() { };
+        public IReadOnlyList<ThreadInformation> Threads { get; } = new List<ThreadInformation>() { };
 
         public TraceResult() { }
     

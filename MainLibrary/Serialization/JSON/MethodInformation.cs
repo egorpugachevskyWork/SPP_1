@@ -3,42 +3,43 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MainLibrary.Information
+namespace MainLibrary.Serialization.JSON
 {
     public class MethodInformation
     {
+
+        [JsonPropertyName("name")]
         public string MethodName { get; } = "Default";
 
+        [JsonPropertyName("class")]
         public string ClassName { get; } = "Default";
 
+        [JsonPropertyName("time")]
         public long ElapsedTime { get; private set; }
 
+        [JsonIgnore]
         public Stopwatch Clock { get; private set; } = new Stopwatch();
 
+        [JsonPropertyName("methods")]
         public List<MethodInformation> NestedMethods { get; } = new List<MethodInformation>();
 
+        [JsonIgnore]
         public bool IsHandled { get; private set; } = false;
 
         public MethodInformation() { }
-        public MethodInformation(string methodName, string className)
+        public MethodInformation(MainLibrary.Information.MethodInformation method)
         {
-            MethodName = methodName;
-            ClassName = className;
-        }
+            MethodName = method.MethodName;
+            ClassName = method.ClassName;
+            ElapsedTime = method.ElapsedTime;
 
-        public void StartTracing()
-        {
-            Clock.Reset();
-            Clock.Start();
-        }
-
-        public void StopTracing()
-        {
-            Clock.Stop();
-            IsHandled = true;
-            ElapsedTime += Clock.ElapsedMilliseconds;
+            foreach(var meth in method.NestedMethods)
+            {
+                NestedMethods.Add(new MethodInformation(meth));
+            }
         }
     }
 }
