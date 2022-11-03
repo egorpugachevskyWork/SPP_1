@@ -4,41 +4,36 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace MainLibrary.Serialization.XML
 {
     public class MethodInformation
     {
-        public string MethodName { get; } = "Default";
+        [XmlAttribute(AttributeName = "name", Form = XmlSchemaForm.Unqualified)]
+        public string MethodName { get; set;  } = "Default";
 
-        public string ClassName { get; } = "Default";
+        [XmlAttribute(AttributeName = "class", Form = XmlSchemaForm.Unqualified)]
+        public string ClassName { get; set;  } = "Default";
 
-        public long ElapsedTime { get; private set; }
+        [XmlAttribute(AttributeName = "time", Form = XmlSchemaForm.Unqualified)]
+        public long ElapsedTime { get; set; }
 
-        public Stopwatch Clock { get; private set; } = new Stopwatch();
-
-        public List<MethodInformation> NestedMethods { get; } = new List<MethodInformation>();
-
-        public bool IsHandled { get; private set; } = false;
+        [XmlElement(ElementName = "method")]
+        public List<MethodInformation> NestedMethods { get; set; } = new List<MethodInformation>();
 
         public MethodInformation() { }
-        public MethodInformation(string methodName, string className)
+        public MethodInformation(MainLibrary.Information.MethodInformation method)
         {
-            MethodName = methodName;
-            ClassName = className;
-        }
+            MethodName = method.MethodName;
+            ClassName = method.ClassName;
+            ElapsedTime = method.ElapsedTime;
 
-        public void StartTracing()
-        {
-            Clock.Reset();
-            Clock.Start();
-        }
-
-        public void StopTracing()
-        {
-            Clock.Stop();
-            IsHandled = true;
-            ElapsedTime += Clock.ElapsedMilliseconds;
+            foreach (var meth in method.NestedMethods)
+            {
+                NestedMethods.Add(new MethodInformation(meth));
+            }
         }
     }
 }

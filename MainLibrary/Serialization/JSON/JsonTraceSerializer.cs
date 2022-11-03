@@ -1,10 +1,5 @@
 ﻿using MainLibrary.Tracer.JSON;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace MainLibrary.Serialization.JSON
 {
@@ -13,7 +8,7 @@ namespace MainLibrary.Serialization.JSON
         string ITraceSerializer.Serialize(MainLibrary.Tracer.TraceResult traceResult)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
-            var attrTraceResult = new TraceResult(traceResult.Threads);
+            var attrTraceResult = new TraceResult(traceResult);
             string jsonString = JsonSerializer.Serialize<TraceResult>(attrTraceResult, options);
             return jsonString;
         }

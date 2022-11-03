@@ -1,6 +1,7 @@
 ﻿using MainLibrary.Serialization;
 using MainLibrary.Serialization.JSON;
 using MainLibrary.Serialization.Writers;
+using MainLibrary.Serialization.XML;
 using MainLibrary.Tracer;
 
 namespace WorkingExample
@@ -26,12 +27,15 @@ namespace WorkingExample
 
             var result = tracer.GetTraceResult();
             ITraceSerializer jsonSerializaer = new JsonTraceSerializer();
-            var jsonString = jsonSerializaer.Serialize(result); 
+            var jsonString = jsonSerializaer.Serialize(result);
+
+            ITraceSerializer xmlSerializer = new XMLTraceSerializer();
+            var xmlSrting = xmlSerializer.Serialize(result);
 
             ITraceWriter consoleWriter = new ConsoleTraceWriter();
             ITraceWriter fileWriter = new FileTraceWriter("D:\\forlab1.txt");
 
-            consoleWriter.Write(jsonString);
+            consoleWriter.Write(xmlSrting);
             fileWriter.Write(jsonString);
         }
     }

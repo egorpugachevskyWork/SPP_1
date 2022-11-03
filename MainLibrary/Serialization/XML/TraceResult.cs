@@ -4,18 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace MainLibrary.Serialization.XML
 {
+    [XmlRoot(ElementName = "root")]
     public class TraceResult
     {
-        public List<ThreadInformation> Threads { get; } = new List<ThreadInformation>() { };
+        [XmlElement(ElementName = "threads")]
+        public List<ThreadInformation> Threads { get; set; } = new List<ThreadInformation>() { };
 
         public TraceResult() { }
     
-        public TraceResult(List<ThreadInformation> threads)
+        public TraceResult(MainLibrary.Tracer.TraceResult traceResult)
         {
-            Threads = threads;
+            foreach(var thread in traceResult.Threads)
+            {
+                Threads.Add(new ThreadInformation(thread));
+            }
         }
     }
 }

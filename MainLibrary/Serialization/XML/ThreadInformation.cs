@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace MainLibrary.Serialization.XML
 {
     public class ThreadInformation
     {
-        public int Id { get; }
+        [XmlAttribute(AttributeName = "id", Form = XmlSchemaForm.Unqualified)]
+        public int Id { get; set;  }
 
-        public long ElapsedTime { get; private set; }
+        [XmlAttribute(AttributeName = "time", Form = XmlSchemaForm.Unqualified)]
+        public long ElapsedTime { get; set; }
 
-        public List<MethodInformation> Methods { get; } = new List<MethodInformation>();
+        [XmlElement(ElementName = "method")]
+        public List<MethodInformation> Methods { get; set; } = new List<MethodInformation>();
 
         public ThreadInformation() {}
-        public ThreadInformation(int id)
+        public ThreadInformation(MainLibrary.Information.ThreadInformation thread)
         {
-            Id = id;
-        }
+            Id = thread.Id;
+            ElapsedTime = thread.ElapsedTime;
 
-        public void EstimateElapsedTime()
-        {
-            foreach (var method in Methods)
+            foreach (var method in thread.Methods)
             {
-                ElapsedTime += method.ElapsedTime;
+                Methods.Add(new MethodInformation(method));
             }
         }
     }

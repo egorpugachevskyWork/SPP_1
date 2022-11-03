@@ -4,10 +4,11 @@ using System.Xml.Serialization;
 
 namespace MainLibrary.Serialization.XML
 {
-    public class XMLSerializer : ITraceSerializer
+    public class XMLTraceSerializer : ITraceSerializer
     {
         string ITraceSerializer.Serialize(MainLibrary.Tracer.TraceResult traceResult)
         {
+            var attrTraceResult = new TraceResult(traceResult);
             using (var memStream = new MemoryStream())
             {
                 var xmlSerializer = new XmlSerializer(typeof(TraceResult));
@@ -16,7 +17,7 @@ namespace MainLibrary.Serialization.XML
                     Encoding = Encoding.UTF8,
                     Indent = true
                 });
-                xmlSerializer.Serialize(streamWriter, traceResult);
+                xmlSerializer.Serialize(streamWriter, attrTraceResult);
                 return Encoding.UTF8.GetString(memStream.ToArray());
             }
         }

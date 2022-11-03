@@ -14,10 +14,10 @@ namespace MainLibrary.Tracer.JSON
         public List<ThreadInformation> Threads { get; } = new List<ThreadInformation>() { };
 
         public TraceResult() { }
-    
-        public TraceResult(IReadOnlyList<MainLibrary.Information.ThreadInformation> threads)
+
+        public TraceResult(MainLibrary.Tracer.TraceResult traceResult)
         {
-            foreach(var thread in threads)
+            foreach (var thread in traceResult.Threads)
             {
                 Threads.Add(new ThreadInformation(thread));
             }
