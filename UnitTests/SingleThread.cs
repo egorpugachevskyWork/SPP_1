@@ -67,5 +67,23 @@ namespace UnitTests
             var countNestedMethods = _result.Threads[0].Methods[0].NestedMethods.Count;
             Assert.IsTrue(countNestedMethods == 1, $"Wrong amount of nested methods {countNestedMethods}");
         }
+
+        [Test]
+        public void TreeOfMethod()
+        {
+            var methods = _result.Threads[0].Methods;
+            Assert.Multiple(() =>
+            {
+                Assert.That(methods[0].ClassName.Equals("Foo"), $"Wrong first class name {methods[0].ClassName}");
+                Assert.That(methods[0].MethodName.Equals("MyMethod"), $"Wrong first method name {methods[0].MethodName}");
+
+                Assert.That(methods[0].NestedMethods[0].ClassName.Equals("Boo"), $"Wrong first class name {methods[0].NestedMethods[0].ClassName}");
+                Assert.That(methods[0].NestedMethods[0].MethodName.Equals("InnerMethod"), $"Wrong first method name {methods[0].NestedMethods[0].MethodName}");
+
+                Assert.That(methods[0].NestedMethods[0].NestedMethods[0].ClassName.Equals("Boo"), $"Wrong first class name {methods[0].NestedMethods[0].NestedMethods[0].ClassName}");
+                Assert.That(methods[0].NestedMethods[0].NestedMethods[0].MethodName.Equals("SuperInnerMethod"), $"Wrong first method name {methods[0].NestedMethods[0].NestedMethods[0].MethodName}");
+
+            });
+        }
     }
 }
